@@ -56,7 +56,6 @@ async function run() {
 
         // POST CART API 
         app.post('/cart', async (req, res) => {
-            // const id = 
             const cart = req.body;
             const result = await cartCollection.insertOne(cart);
             console.log(result)
@@ -64,10 +63,10 @@ async function run() {
         })
 
         // GET CART API 
-        app.get('/cart', async (req, res) => {
-            const cursor = cartCollection.find({});
-            const carts = await cursor.toArray();
-            res.send(carts);
+        app.get('/cart/:email', async (req, res) => {
+            const { email } = req.params;
+            const result = await cartCollection.find({ email: email }).toArray()
+            res.send(result)
         })
     }
     finally {
