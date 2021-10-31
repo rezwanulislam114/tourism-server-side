@@ -64,8 +64,7 @@ async function run() {
 
         // GET CART API 
         app.get('/cart', async (req, res) => {
-            const { email } = req.params;
-            const result = await cartCollection.find({ email: email }).toArray()
+            const result = await cartCollection.find({}).toArray()
             res.send(result)
         })
 
@@ -74,6 +73,7 @@ async function run() {
             const query = { _id: ObjectId(id) };
             const result = await cartCollection.deleteOne(query);
             res.json(result);
+            console.log(result, 'query', query)
         })
     }
     finally {
