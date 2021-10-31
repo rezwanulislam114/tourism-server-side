@@ -22,6 +22,7 @@ async function run() {
         await client.connect();
         const database = client.db('trip');
         const offerCollection = database.collection('offer')
+        const cartCollection = database.collection('cart')
 
         // GET API 
         app.get('/offers', async (req, res) => {
@@ -51,6 +52,22 @@ async function run() {
             const query = { _id: ObjectId(id) };
             const result = await offerCollection.findOne(query);
             res.json(result)
+        })
+
+        // POST CART API 
+        app.post('/cart', async (req, res) => {
+            // const id = 
+            const cart = req.body;
+            const result = await cartCollection.insertOne(cart);
+            console.log(result)
+            res.json(result);
+        })
+
+        // GET CART API 
+        app.get('/cart', async (req, res) => {
+            const cursor = cartCollection.find({});
+            const carts = await cursor.toArray();
+            res.send(carts);
         })
     }
     finally {
