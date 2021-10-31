@@ -63,18 +63,17 @@ async function run() {
         })
 
         // GET CART API 
-        app.get('/cart/:email', async (req, res) => {
+        app.get('/cart', async (req, res) => {
             const { email } = req.params;
             const result = await cartCollection.find({ email: email }).toArray()
             res.send(result)
         })
 
-        app.delete('/offers/:email/:id', async (req, res) => {
+        app.delete('/offers/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
-            console.log(query)
-            // const result = await cartCollection.deleteOne(query);
-            // res.json(result);
+            const result = await cartCollection.deleteOne(query);
+            res.json(result);
         })
     }
     finally {
